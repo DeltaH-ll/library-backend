@@ -1,0 +1,3 @@
+前端用nginx部署
+后端用docker通过Dockerfile部署
+数据库用docker拉一个，记得挂载，也可以不挂但是重启后数据会丢失
