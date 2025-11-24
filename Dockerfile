@@ -1,24 +1,16 @@
-# 使用 Node.js 官方镜像作为基础镜像
-FROM node:18-alpine
+# 基础镜像为node，版本为v9.2.0
+FROM node:22.19.0
 
-# 设置工作目录
-WORKDIR /app
+# 创建容器内的项目存放目录
+RUN mkdir -p /home/nodeapp
+WORKDIR /home/nodeapp
 
-# 复制 package.json 和 package-lock.json
-COPY package*.json ./
+#  将Dockerfile当前目录下所有文件拷贝至容器内项目目录并安装项目依赖
+COPY . /home/nodeapp
+RUN npm install
 
-# 安装依赖
-RUN npm ci --only=production
-
-# 复制应用代码
-COPY . .
-
-# 创建上传目录
-RUN mkdir -p /app/uploads/avatars /app/uploads/books
-
-# 暴露端口
+# 容器对外暴露的端口号，要和node项目配置的端口号一致
 EXPOSE 3000
 
-# 启动应用
-CMD ["node", "index.js"]
-
+# 容器启动时执行的命令
+CMD [ "node", "app.js" ]
