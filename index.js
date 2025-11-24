@@ -80,7 +80,7 @@ testDbConnection()
     console.error('\n💡 请检查：');
     console.error('   1. MySQL 服务是否正在运行');
     console.error('   2. .env 文件中的数据库配置是否正确');
-    console.error('   3. 数据库是否存在（library_management）');
+    console.error('   3. 数据库是否存在（zx_rise_booksystem）');
     console.error('\n   运行诊断工具: node diagnose_db_issue.js');
     process.exit(1);
   });
