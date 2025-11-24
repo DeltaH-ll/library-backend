@@ -32,46 +32,6 @@ services:
       retries: 5
 
   # 后端服务
-  backend:
-    build: .
-    container_name: library-backend
-    ports:
-      - "${PORT:-3000}:3000"
-    volumes:
-      # 挂载上传文件目录，持久化用户头像和图书封面
-      - ./uploads:/app/uploads
-    restart: always
-    depends_on:
-      mysql:
-        condition: service_healthy
-    environment:
-      - NODE_ENV=production
-      # 数据库配置
-      - DB_HOST=mysql
-      - DB_PORT=3306
-      - DB_USER=${DB_USER:-library_user}
-      - DB_PASS=${DB_PASS:-rootpassword}
-      - DB_NAME=${DB_NAME:-library}
-      - DB_POOL_SIZE=${DB_POOL_SIZE:-10}
-      # JWT 配置
-      - JWT_SECRET=${JWT_SECRET:-change_this_secret_in_production}
-      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-24h}
-      # 服务器配置
-      - PORT=3000
-      - CORS_ORIGIN=${CORS_ORIGIN:-http://localhost:5173}
-      # 文件上传配置
-      - UPLOAD_MAX_SIZE=${UPLOAD_MAX_SIZE:-2097152}
-      # MinIO 配置（可选，如果使用对象存储）
-      - MINIO_ENDPOINT=${MINIO_ENDPOINT:-}
-      - MINIO_PORT=${MINIO_PORT:-9000}
-      - MINIO_USE_SSL=${MINIO_USE_SSL:-false}
-      - MINIO_BUCKET=${MINIO_BUCKET:-library}
-      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-}
-      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-}
-      - MINIO_PUBLIC_URL=${MINIO_PUBLIC_URL:-}
-    networks:
-      - library-network
-
 # 数据卷（持久化MySQL数据）
 volumes:
   mysql_data:
